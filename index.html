@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            background-color: #f0f0f0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        function formatCode() {
+            // Get input code
+            var inputCode = document.getElementById('inputCode').value;
+
+            // Replace \ with \\
+            var step1 = inputCode.replace(/\\/g, '\\\\');
+
+            // Replace " with \"
+            var step2 = step1.replace(/"/g, '\\"');
+
+            // Remove line breaks
+            var result = step2.replace(/(\r\n|\n|\r)/gm, '');
+
+            // Display the result
+            document.getElementById('result').innerText = result;
+        }
+
+        function copyToClipboard() {
+            // Get the result text
+            var resultText = document.getElementById('result').innerText;
+
+            // Create a textarea element to copy text to clipboard
+            var textarea = document.createElement('textarea');
+            textarea.value = resultText;
+            document.body.appendChild(textarea);
+            
+            // Select and copy the text
+            textarea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary textarea
+            document.body.removeChild(textarea);
+
+            // Provide user feedback (optional)
+            alert('Data copied to clipboard!');
+        }
+    </script>
+</head>
+<body>
+    <h2>Code Formatter</h2>
+
+    <textarea id="inputCode" placeholder="Paste your code here..." oninput="formatCode()"></textarea>
+
+    <button onclick="formatCode()">Format Code</button>
+    <button onclick="copyToClipboard()">Copy Data</button>
+
+    <div id="result"></div>
+</body>
+</html>
